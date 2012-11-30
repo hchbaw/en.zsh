@@ -59,6 +59,18 @@ en-recursive-edit () {
 }
 zle -N en-recursive-edit
 
+() {
+  setopt localoptions no_ksharrays
+  local -a tmp
+  # XXX: This is not accurate though.
+  : ${(A)tmp::=${(f)"$(zle -l -L)"}}
+  ((${tmp[(i)*-by-keymap]} < $#tmp))
+} || {
+  autoload -Uz keymap+widget && keymap+widget || {
+    echo "en.zsh:error; sorry, en.zsh doesn't work." >&2; return -1
+  }
+}
+
 en+self-insert () {
   region_highlight=(${en_region_highlight[@]})
   ((en_repeat_p == 0)) && zle .self-insert
@@ -171,3 +183,11 @@ bindkey -M vicmd '/' en
 bindkey -M vicmd '?' en
 bindkey -M vicmd 'n' en
 bindkey -M vicmd 'N' en
+
+() {
+  setopt localoptions no_ksharrays
+  local -a tmp; zstyle -a ':auto-fu:var' track-keymap-skip tmp
+  ((${tmp[(i)en]} < $#tmp)) || {
+    zstyle ':auto-fu:var' track-keymap-skip ${tmp[@]} en
+  }
+}
