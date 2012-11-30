@@ -1,0 +1,17 @@
+#!zsh
+
+declare F="${1}"
+declare X="${2}"
+declare -a T
+: ${(A)T::=${${${(ps:\n#:)${${"$(<$F)"}%# Code*}#\#}}}}
+: ${(A)T::=${T# }}
+
+cat <<EOT
+${${T[1]}[1,-2]} 
+$(repeat ${#${T[1]}[1,-2]} do; print -n -- "$X"; done)
+${T[2]}
+
+${T[3]}
+${T[4,-1]}
+$(git show todo:./README.asciidoc.in)
+EOT
