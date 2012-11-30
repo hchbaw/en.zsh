@@ -1,0 +1,12 @@
+vim's pattern-searches-ish of the edit buffer for zsh. 
+------------------------------------------------------
+Author: Takeshi Banse <takebi@laafc.net>
+
+License: BSD-3
+
+Thank you very much nakamuray! Especally to highlight the matches, I appreciate the zaw's `filter-select` code a lot.
+
+
+////
+////
+image::https://github.com/hchbaw/en.zsh/raw/readme/en.zsh.gif[en.zsh demo]
