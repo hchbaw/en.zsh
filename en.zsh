@@ -123,10 +123,10 @@ en-maybe () {
         ((n=${${rh[i]%% *}[2,-1]}-1))
         if ((n $cmp en_cursor)); then
           : ${(A)tmp::=${=rh[i]}}
-          ((tmpcur = $en_cursor))
+          ((tmp_cur = $en_cursor))
           [[ -n "${kont-}" ]] && { "$kont" $((n+1)) }
-          ((en_repeat_p == 0)) ||\
-          ((en_repeat_p == 1)) && ((en_cursor != tmp_cur)) && {
+          ((en_repeat_p == 0)) || \
+          { ((en_repeat_p == 1)) && ((en_cursor != tmp_cur)) } && {
             rh[i]="$tmp[1] $tmp[2] fg=black,bg=255"
             break 2
           }
