@@ -1,3 +1,11 @@
 ////
 ////
 image::https://github.com/hchbaw/en.zsh/raw/readme/en.zsh.gif[en.zsh demo]
+
+Note
+----
+This script replaces below vicmd keymap entries.
+----
+/, ?, n and N
+----
+Please beaware of.
