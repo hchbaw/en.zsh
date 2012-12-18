@@ -10,6 +10,7 @@
 # Code
 
 bindkey -N en emacs
+bindkey -M en ' ' self-insert
 
 typeset -g en_buffer en_keys
 typeset -gi en_backward_p; ((en_backward_p = 0))
