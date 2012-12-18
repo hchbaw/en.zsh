@@ -64,7 +64,7 @@ zle -N en-recursive-edit
   local -a tmp
   # XXX: This is not accurate though.
   : ${(A)tmp::=${(f)"$(zle -l -L)"}}
-  ((${tmp[(i)*-by-keymap]} < $#tmp))
+  ((${tmp[(i)(* auto-fu|*-by-keymap)]} < $#tmp))
 } || {
   autoload -Uz keymap+widget && keymap+widget || {
     echo "en.zsh:error; sorry, en.zsh doesn't work." >&2; return -1
