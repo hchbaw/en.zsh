@@ -36,15 +36,20 @@ with-en () {
       fi
     done
     region_highlight=(${en_region_highlight})
-    if ((en_backward_p == 0)); then
-      PREDISPLAY+='/'
-    else
-      PREDISPLAY+='?'
-    fi
-    "$@"
+    PREDISPLAY+=' '
+    with-en-dir "$@"
   } always {
     ((CURSOR = en_cursor))
   }
+}
+
+with-en-dir () {
+  if ((en_backward_p == 0)); then
+    PREDISPLAY[-1]='/'
+  else
+    PREDISPLAY[-1]='?'
+  fi
+  "$@"
 }
 
 en-recursive-edit () {
@@ -78,16 +83,13 @@ en+self-insert () {
   ((en_repeat_p == 0)) && { en-maybe ; return $? }
   ((en_repeat_p == 1)) && {
     if [[ "$KEYS" == "$en_keys" ]]; then
-      en-maybe en-movecursor ; return $?
+      with-en-dir en-maybe en-movecursor ; return $?
     elif [[ "${(L)KEYS}" == "$en_keys" ]]; then
       ((en_repeat_p = 1))
-      ((en_backward_p = ((en_backward_p == 1 ? 0 : 1))))
-      if ((en_backward_p == 0)); then
-        PREDISPLAY[-1]='/'
-      else
-        PREDISPLAY[-1]='?'
-      fi
-      en-maybe en-movecursor ; return $?
+      local -i b; ((b=en_backward_p))
+      local -i en_backward_p;
+      ((en_backward_p = ((b == 1 ? 0 : 1))))
+      with-en-dir en-maybe en-movecursor ; return $?
     else
       zle -U "$KEYS" ; zle .accept-line ; return $?
     fi
